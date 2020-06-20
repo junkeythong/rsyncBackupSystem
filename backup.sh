@@ -56,7 +56,7 @@ if [ ! -d ${backup_name} ]; then
 fi
 
 # Move to root
-cd /
+cd / || return 101
 
 # Let's back up
 writeToLog "===> Starting backup system from source:$source_dir to destination:$dest_dir ..."
@@ -67,8 +67,8 @@ if sudo rsync --archive --acls --xattrs -partial --progress --verbose --human-re
 then
 	writeToLog "Backup completed successfully"
 else
-	writeToLog "Backup FAILED, will try again in the next time !!! return -1."
-	return -1
+	writeToLog "Backup FAILED, will try again in the next time !!! return 100."
+	return 100; 
 fi
 
 # We only keep 5 latest backup
