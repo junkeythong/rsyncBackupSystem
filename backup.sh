@@ -15,17 +15,15 @@ logfile='/var/log/rsync_backup'
 # Disk UUID
 diskUUID=500cfbf9-41f3-4b3e-98fd-53a9ed287a69
 
-# Exclude folder and file. Should be list on 1 line, otherwise parsing will be wrong
-exclude_folder_and_file={$dest_dir,'dev/*','lost+found','mnt/*','/proc/*','run/*','sys/*','tmp/*','home/*/.gvfs/','.thumbnails/','media','home/*/.cache/mozilla/','home/*/.cache/chromium/','home/*/.local/share/Trash/','swapfile','.cache'}
-
 #############################################
 
 writeToLog() {
 	echo -e "$(date --rfc-3339=seconds) ${1}" | tee -a "${logfile}"
 }
 
-# Renew log file
+# Refresh the log file, just keep the latest log to investigate, no need to rotate.
 echo '' > $logfile
+
 writeToLog "########## FULL SYSTEM BACKUP ##########"
 
 # Check if backup directory is exist
