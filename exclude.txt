@@ -1,0 +1,16 @@
+HDD500
+dev/*
+lost+found
+mnt/*
+proc/*
+run/*
+sys/*
+tmp/*
+home/*/.gvfs/
+.thumbnails/
+media/
+home/*/.cache/mozilla/
+home/*/.cache/chromium/
+home/*/.local/share/Trash/
+swapfile
+.cache
