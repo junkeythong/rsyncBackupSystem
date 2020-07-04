@@ -10,11 +10,13 @@ source_dir='/'
 dest_dir='/HDD500'
 
 # Log file for this script
-logfile='/var/log/rsync_backup'
+logfile='/home/junkey_1/rsync-backup.log'
 
 # Disk UUID
 diskUUID=500cfbf9-41f3-4b3e-98fd-53a9ed287a69
 
+# Exclude file
+exclude_file='/home/junkey_1/archive/petcode/rsyncBK/exclude.txt'
 #############################################
 
 writeToLog() {
@@ -36,7 +38,8 @@ fi
 if ! mountpoint -q $dest_dir/; then
         writeToLog "Mounting the external drive to: $dest_dir ..."
         if ! mount -U $diskUUID $dest_dir && ! mountpoint -q $dest_dir/; then
-                writeToLog "FAILED to mount! Exiting ..."
+                writeToLog "FAILED to mount! Exited"
+		rm -rf $dest_dir
                 exit 1
         fi
 fi
@@ -45,7 +48,7 @@ fi
 writeToLog "Starting backup system FROM $source_dir TO $dest_dir ..."
 if rsync --archive --acls --xattrs --partial --human-readable --recursive --hard-links --owner \
 		--delete --delete-excluded --info=progress2 --verbose \
-		--exclude-from=exclude.txt $source_dir $dest_dir \
+		--exclude-from=$exclude_file $source_dir $dest_dir \
 		--log-file=$logfile
 then
 	writeToLog "Backup completed successfully"
