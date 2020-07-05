@@ -2,11 +2,13 @@
 
 # Script to backup personal files to the external drive.
 
-############ Some global setting ############
+############ Some global (hard code) setting ############
 # Source directory we wish to backup
 source_dir='/'
 
-# Destination directory we wish to backup to (DO NOT end with a forward-slash).
+# Destination directory we wish to backup to
+# Note: DO NOT end with a forward-slash for dest_dir, but if
+# it is a source_dir, it will need.
 dest_dir='/HDD500'
 
 # Log file for this script
@@ -38,8 +40,12 @@ fi
 if ! mountpoint -q $dest_dir/; then
         writeToLog "Mounting the external drive to: $dest_dir ..."
         if ! mount -U $diskUUID $dest_dir && ! mountpoint -q $dest_dir/; then
-                writeToLog "FAILED to mount! Exited"
-		rm -rf $dest_dir
+                writeToLog "FAILED to mount!"
+	        if [ -d $dest_dir ]; then
+			writeToLog "Remove the directory: $dest_dir ..."
+	                rm -rf $dest_dir
+	        fi
+		writeToLog "EXITED"
                 exit 1
         fi
 fi
@@ -59,12 +65,9 @@ fi
 writeToLog "Un-mount the mountpoint ..."
 if ! umount $dest_dir; then
         writeToLog "FAILED to umount $dest_dir!"
-else
-	# Delete destination directory
+elif [ -d $dest_dir ]; then
 	writeToLog "Remove the directory: $dest_dir after ummount the disk ..."
-	if [ -d $dest_dir ]; then
-		rm -rf $dest_dir
-	fi
+	rm -rf $dest_dir
 fi
 writeToLog "Backup DONE!"
 exit 0

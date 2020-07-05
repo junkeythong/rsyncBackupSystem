@@ -1,6 +1,7 @@
 # RsyncBackupSystem
 + This script will backup whole OS (everething) to another backup disk
-+ List exclude files/dirs will take from exclude.txt (same place)
-+ Can use cron job or run mannualy
-+ Please run with root power.
-+ And still not tested yet :)
++ List of exclude files/dirs will be taken from exclude.txt
++ Can run it by cron job or manualy
++ Please run with root power
++ Please edit the content of hardcode and the cron if there is any changes
++ And it has not been tested yet :)
