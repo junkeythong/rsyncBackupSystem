@@ -7,8 +7,9 @@
 source_dir='/'
 
 # Destination directory we wish to backup to
+# Prefer to create a separate mount point instead of /mnt
 # Note: DO NOT end with a forward-slash for dest_dir, but if
-# it is a source_dir, it will need.
+# it is a source_dir, it will need (in the case we do a restore)
 dest_dir='/HDD500'
 
 # Log file for this script
